@@ -1,6 +1,7 @@
 import React from "react";
 import "./global.css";
 import "./App.css";
+import "./Sidebar.css";
 
 function App() {
   return (
@@ -16,10 +17,17 @@ function App() {
             <label htmlFor="techs">Techs</label>
             <input name="techs" id="techs" required />
           </div>
-          <div className="input-block">
-            <label htmlFor="techs">Techs</label>
-            <input name="techs" id="techs" required />
+          <div className="input-group">
+            <div className="input-block">
+              <label htmlFor="latitude">Latitude</label>
+              <input name="latitude" id="latitude" required />
+            </div>
+            <div className="input-block">
+              <label htmlFor="longitude">Longitude</label>
+              <input name="longitude" id="longitude" required />
+            </div>
           </div>
+          <button type="submit">Save</button>
         </form>
       </aside>
       <main></main>

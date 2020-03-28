@@ -14,7 +14,10 @@ import {
 } from "expo-location";
 import { MaterialIcons } from "@expo/vector-icons";
 
+import api from "../services/api";
+
 function Main({ navigation }) {
+  const [devs, setDevs] = useState([]);
   const [currentRegion, setCurrentRegion] = useState(null);
 
   useEffect(() => {
@@ -40,13 +43,33 @@ function Main({ navigation }) {
     loadInitialPosition();
   }, []);
 
+  async function loadDevs() {
+    const { latitude, longitude } = currentRegion;
+
+    const response = await api.get("/search", {
+      params: {
+        latitude,
+        longitude,
+        techs
+      }
+    });
+
+    setDevs(response.data);
+  }
+
+  function handleRegionChanged() {}
+
   if (!currentRegion) {
     return null;
   }
 
   return (
     <>
-      <MapView initialRegion={currentRegion} style={styles.map}>
+      <MapView
+        onRegionChangeComplete={handleRegionChanged}
+        initialRegion={currentRegion}
+        style={styles.map}
+      >
         <Marker coordinate={{ latitude: 38.8565808, longitude: -9.0691528 }}>
           <Image
             style={styles.avatar}
@@ -119,7 +142,7 @@ const styles = StyleSheet.create({
 
   searchForm: {
     position: "absolute",
-    bottom: 20,
+    top: 20,
     left: 20,
     right: 20,
     zIndex: 5,
@@ -143,7 +166,15 @@ const styles = StyleSheet.create({
     elevation: 2
   },
 
-  loadButton: {}
+  loadButton: {
+    width: 50,
+    height: 50,
+    backgroundColor: "#8E4Dff",
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 15
+  }
 });
 
 export default Main;

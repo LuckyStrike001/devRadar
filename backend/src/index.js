@@ -1,19 +1,14 @@
-//Métodos HTTP
-// get, post, put, delete //
-
-// Tipos de parametros
-// Query params: request.query (Filtros, ordenação, paginação...) - (get)
-// Route params: request.params (Identificar um recurso na alteração ou remoção) - (put and delete)
-// Body: request.body (Dados para criação  ou alteração  de um registro) - (post and put)
-
-//MongoDb (Não relacional)
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const http = require("http");
 const routes = require("./routes");
+const { setupWebsocket } = require("./websocket");
 
 const app = express();
+const server = http.Server(app);
+
+setupWebsocket(server);
 
 mongoose.connect(
   "mongodb+srv://omnistack:omnistack@cluster0-nycum.mongodb.net/week10?retryWrites=true&w=majority",

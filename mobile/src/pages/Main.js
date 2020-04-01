@@ -46,7 +46,9 @@ function Main({ navigation }) {
   }, []);
 
   function setupWebsockets() {
-    connect();
+    const { latitude, longitude } = currentRegion;
+
+    connect(latitude, longitude, techs);
   }
 
   async function loadDevs() {
@@ -59,8 +61,6 @@ function Main({ navigation }) {
         techs
       }
     });
-
-    console.log(response.data.devs);
 
     setDevs(response.data.devs);
     setupWebsockets();
